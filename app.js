@@ -1,7 +1,7 @@
 var express = require("express");
 var bodyparser = require('body-parser');
 var morgan = require('morgan');
-var companyRouter = require('./controller/company');
+var companyRouter = require('./controller/Company');
 var PartnerRouter = require('./controller/Partner');
 var ContactRouter = require('./controller/Contact');
 
