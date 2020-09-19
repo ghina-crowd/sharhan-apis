@@ -34,7 +34,6 @@ var PartnerRepository = {
     update: function (newPartnerData) {
         return new Promise(function (resolve, reject) {
             models.Partner.update({
-                text: newPartnerData.text,
                 image: newPartnerData.image,
             }, { where: { partner_id: newPartnerData.partner_id } }).then(Partner => {
                 models.Partner.findOne({ where: { partner_id: newPartnerData.partner_id } }).then((Partner => {
@@ -56,7 +55,6 @@ var PartnerRepository = {
     createPartner: function (newPartnerData) {
         return new Promise(function (resolve, reject) {
             models.Partner.create({
-                text: newPartnerData.text,
                 image: newPartnerData.image,
             }).then(contact => {
                 resolve(contact);

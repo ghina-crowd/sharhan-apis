@@ -55,16 +55,7 @@ router.post('/create', async function (req, res) {
 
             return new Promise(function (resolve, reject) {
 
-                if (!credentials.text || credentials.text == '') {
-                    languageService.get_lang(lang, 'text').then(msg => {
-                        res.json({
-                            status: statics.STATUS_FAILURE,
-                            code: codes.FAILURE,
-                            message: msg.message,
-                            data: null
-                        });
-                    });
-                } else if (!credentials.image || credentials.image == '') {
+                if (!credentials.image || credentials.image == '') {
                     languageService.get_lang(lang, 'image').then(msg => {
                         res.json({
                             status: statics.STATUS_FAILURE,
@@ -173,14 +164,7 @@ router.put('/update', async function (req, res) {
 
             return new Promise(function (resolve, reject) {
 
-                if (!credentials.partner_id || credentials.partner_id == '') {
-                    res.json({
-                        status: statics.STATUS_FAILURE,
-                        code: codes.FAILURE,
-                        message: 'partner_id',
-                        data: null
-                    });
-                } else if (!credentials.text || credentials.text == '') {
+                if (!credentials.text || credentials.text == '') {
                     res.json({
                         status: statics.STATUS_FAILURE,
                         code: codes.FAILURE,
