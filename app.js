@@ -8,6 +8,8 @@ var ContactRouter = require('./controller/Contact');
 var defaultMiddleware = require('./middleware/defaultMiddleware.js');
 var config = require('./constant/config.js');
 var UploadRouter = require('./controller/upload');
+var authenticationRouter = require('./controller/authentication');
+
 var { expressSharp, FsAdapter } = require('express-sharp')
 
 
@@ -60,6 +62,7 @@ app.use('/upload', UploadRouter);
 app.use('/company', companyRouter);
 app.use('/partner', PartnerRouter);
 app.use('/contact', ContactRouter);
+app.use('/authenticate', authenticationRouter);
 
 
 
