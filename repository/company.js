@@ -151,6 +151,25 @@ var companyRepository = {
 
 
     },
+    getAdmin: function (company_id) {
+
+
+        return new Promise(function (resolve, reject) {
+            models.Company.findOne({
+                where: { company_id: company_id }
+            }).then(Company => {
+                if (Company == null) {
+                    resolve({});
+                } else {
+                    resolve(Company);
+                }
+            }, error => {
+                reject(error);
+            });
+        });
+
+
+    },
     create: async function (newcompanies) {
         return new Promise(async function (resolve, reject) {
             models.Company.create({
@@ -181,8 +200,8 @@ var companyRepository = {
                 image: newcompanies.image,
                 link: newcompanies.link
             }, { where: { company_id: newcompanies.company_id } }).then(async company => {
-                companyRepository.get(newcompanies.company_id).then((company) => {
-                    resolve(company);
+                companyRepository.getAdmin(newcompanies.company_id).then((companyupdated) => {
+                    resolve(companyupdated);
                 }, error => {
                     reject(error)
                 });
