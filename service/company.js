@@ -21,6 +21,16 @@ module.exports = {
         });
     },
 
+    filtersAdmin: function (filters) {
+        return new Promise(function (resolve, reject) {
+            companysRepository.filtersAdmin(filters).then(user => {
+                resolve(user);
+            }, error => {
+                reject(error);
+            });
+        });
+    },
+
 
     update: function (newcompanyData) {
         return new Promise(function (resolve, reject) {

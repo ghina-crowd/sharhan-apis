@@ -72,6 +72,58 @@ var companyRepository = {
 
 
     },
+
+    filtersAdmin: function (filters) {
+
+
+        var pageSize = Number(filters.size); // page start from 0
+        const offset = filters.page * pageSize;
+
+        var datacompany = {}
+
+        if (filters.category_id) {
+            datacompany.category_id = filters.category_id
+        }
+        if (filters.sub_category_id) {
+            datacompany.sub_category_id = filters.sub_category_id
+        }
+        if (filters.sub_category_id) {
+            datacompany.sub_category_id = filters.sub_category_id
+        }
+
+        if (filters.company_name) {
+            if (lang.acceptedLanguage == 'en') {
+                datacompany.title_en = {
+                    [Op.like]: '%' + filters.company_name + '%'
+                }
+            } else {
+                datacompany.title_ar = {
+                    [Op.like]: '%' + filters.company_name + '%'
+                }
+            }
+        }
+
+
+        return new Promise(function (resolve, reject) {
+
+            models.Company.findAll({
+                distinct: true,
+                order: [['company_id', 'DESC']],
+            }).then((companies => {
+                if (companies == null) {
+                    resolve([]);
+                } else {
+                    resolve(companies);
+                }
+            }), error => {
+                reject(error);
+            })
+        });
+
+
+
+
+    },
     get: function (company_id) {
 
 

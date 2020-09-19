@@ -74,6 +74,70 @@ router.get('/get', async function (req, res) {
         })
     }
 });
+router.get('/admin/get', async function (req, res) {
+    var errors = validationResult(req);
+    if (errors.array().length == 0) {
+
+
+        var lang = req.headers.language;
+        var data = req.body;
+        var category_id = Number(data.category_id) ? Number(data.category_id) : 0;
+        var sub_category_id = Number(data.sub_category_id) ? Number(data.sub_category_id) : 0;
+
+        var size = data.size ? data.size : 12;
+        var page = req.body.page ? req.body.page : 0;
+        var have_tender = req.body.have_tender ? req.body.have_tender : -1;
+        var company_name = req.body.company_name ? req.body.company_name : '';
+
+        var filters = {};
+        filters.category_id = category_id;
+        filters.sub_category_id = sub_category_id;
+        filters.page = page;
+        filters.size = size;
+        filters.have_tender = have_tender;
+        filters.company_name = company_name;
+
+
+
+        {
+            return new Promise(function (resolve, reject) {
+                companysService.filtersAdmin(filters).then(companys => {
+                    resolve(companys);
+                    if (companys == null || companys.length == 0) {
+                        languageService.get_lang(lang, 'DATA_NOT_FOUND').then(msg => {
+                            res.json({
+                                status: statics.STATUS_FAILURE,
+                                code: codes.FAILURE,
+                                message: msg.message,
+                                data: [],
+                            });
+                        });
+                    } else {
+                        languageService.get_lang(lang, 'DATA_FOUND').then(msg => {
+                            res.json({
+                                status: statics.STATUS_SUCCESS,
+                                code: codes.SUCCESS,
+                                message: msg.message,
+                                data: companys,
+                            });
+                        });
+                    }
+                }, error => {
+                    reject(error);
+                });
+            });
+        }
+    } else {
+        languageService.get_lang(lang, 'INVALID_DATA').then(msg => {
+            res.json({
+                status: statics.STATUS_FAILURE,
+                code: codes.INVALID_DATA,
+                message: msg.message,
+                data: errors.array()
+            });
+        })
+    }
+});
 router.get('/get/:company_id', async function (req, res) {
     lang = req.headers.language;
     var errors = validationResult(req);
